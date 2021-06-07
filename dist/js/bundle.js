@@ -240,9 +240,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modal */ "./src/js/modules/modal.js");
 
 
-function forms() {
+function forms(formSelector, modalTimerId) {
 //Forms
-      const forms = document.querySelectorAll('form');
+      const forms = document.querySelectorAll(formSelector);
 
       const message = {
          loading : 'icons/spinner.svg',
@@ -308,7 +308,7 @@ function forms() {
          const prevModalDialog = document.querySelector('.modal__dialog');
 
          prevModalDialog.classList.add('hide');
-         (0,_modal__WEBPACK_IMPORTED_MODULE_0__.openModal)();
+         (0,_modal__WEBPACK_IMPORTED_MODULE_0__.openModal)('.modal', modalTimerId);
 
          const thanksModal = document.createElement('div');
          thanksModal.classList.add('modal__dialog');
@@ -325,7 +325,7 @@ function forms() {
             thanksModal.remove();
             prevModalDialog.classList.add('show');
             prevModalDialog.classList.remove('hide');
-            (0,_modal__WEBPACK_IMPORTED_MODULE_0__.closeModal)();
+            (0,_modal__WEBPACK_IMPORTED_MODULE_0__.closeModal)('.modal');
          }, 4000);
       }
 
@@ -355,53 +355,61 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "closeModal": () => (/* binding */ closeModal)
 /* harmony export */ });
 //   Modal Timer
-const modalTimerId = setTimeout(openModal, 5000);
-function openModal() {
-   const modal = document.querySelector('.modal');
+function openModal(modalSelector, modalTimerId) {
+   const modal = document.querySelector(modalSelector);
    modal.classList.add('show');
    modal.classList.remove('hide');
    document.body.style.overflow = 'hidden';
-   window.removeEventListener('scroll', showModalByScroll);
-   // window.removeEventListener('scroll', clearInterval(modalTimerId));// Удаление вызова 
-   clearInterval(modalTimerId);
+      console.log(modalTimerId);
+   if (modalTimerId) {
+      // window.removeEventListener('scroll', showModalByScroll);
+      clearInterval(modalTimerId);
+      // window.removeEventListener('scroll', clearInterval(modalTimerId));// Удаление вызова 
+   }
 }
-function closeModal() {
-   const modal = document.querySelector('.modal');
+function closeModal(modalSelector) {
+   const modal = document.querySelector(modalSelector);
    modal.classList.add('hide');
    modal.classList.remove('show');
    document.body.style.overflow = '';
 }
 
-function modal() {
-   //  Modal window
-  const modal = document.querySelector('.modal'),
-  modalOpen = document.querySelectorAll('[data-modal]');
+//  Modal window
+function modal(triggerSelector, modalSelector, modalTimerId) {
+
+  const modal = document.querySelector(modalSelector),
+  modalOpen = document.querySelectorAll(triggerSelector);
 
   modalOpen.forEach(btn => { //btn - рандомное название
-     btn.addEventListener('click', openModal);
+     btn.addEventListener('click', () => openModal(modalSelector, modalTimerId));
   });
 
    // Отрефакторили закритие модалки про крестику с помощью getAttr.
    modal.addEventListener('click', (e) => {
       if (e.target === modal || e.target.getAttribute('data-close') == "") {
-      closeModal();
+      closeModal(modalSelector);
       }
    });
 
    document.addEventListener('keydown', (e) => {
       if (e.code === 'Escape' && modal.classList.contains('show')) {
-      closeModal();
+      closeModal(modalSelector);
       }
    });
 
    window.addEventListener('scroll', showModalByScroll);
 
+   function showModalByScroll() {
+      if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 200) {
+         openModal(modalSelector, modalTimerId);
+         window.removeEventListener('scroll', showModalByScroll);// Удаление вызова модалки перенесено в функцию openModal
+      }
+   }
+   window.addEventListener('scroll', showModalByScroll);
 }
-function showModalByScroll() {
-   if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 200) {
-      openModal();
-   // window.removeEventListener('scroll', showModalByScroll);// Удаление вызова модалки перенесено в функцию openModal
-}}
+
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (modal);
 
 
@@ -735,13 +743,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 window.addEventListener('DOMContentLoaded', () => {
- 
+      const modalTimerId = setTimeout(() => (0,_modules_modal__WEBPACK_IMPORTED_MODULE_2__.openModal)('.modal', modalTimerId), 5000);
    (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_0__.default)();
    (0,_modules_cards__WEBPACK_IMPORTED_MODULE_1__.default)();
-   (0,_modules_modal__WEBPACK_IMPORTED_MODULE_2__.default)();
+   (0,_modules_modal__WEBPACK_IMPORTED_MODULE_2__.default)('[data-modal]', '.modal', modalTimerId);
    (0,_modules_slider__WEBPACK_IMPORTED_MODULE_3__.default)();
-   (0,_modules_forms__WEBPACK_IMPORTED_MODULE_4__.default)();
+   (0,_modules_forms__WEBPACK_IMPORTED_MODULE_4__.default)('form', modalTimerId);
    (0,_modules_calc__WEBPACK_IMPORTED_MODULE_5__.default)();
    (0,_modules_timer__WEBPACK_IMPORTED_MODULE_6__.default)();         
 });

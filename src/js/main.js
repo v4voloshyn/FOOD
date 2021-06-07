@@ -5,14 +5,15 @@ import slider from './modules/slider';
 import forms from './modules/forms';
 import calc from './modules/calc';
 import timer from './modules/timer';
+import {openModal} from './modules/modal';
 
 window.addEventListener('DOMContentLoaded', () => {
- 
+      const modalTimerId = setTimeout(() => openModal('.modal', modalTimerId), 5000);
    tabs();
    cards();
-   modal();
+   modal('[data-modal]', '.modal', modalTimerId);
    slider();
-   forms();
+   forms('form', modalTimerId);
    calc();
    timer();         
 });
