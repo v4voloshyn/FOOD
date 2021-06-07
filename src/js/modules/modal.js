@@ -1,5 +1,5 @@
 //   Modal Timer
-// const modalTimerId = setTimeout(openModal, 5000);
+const modalTimerId = setTimeout(openModal, 5000);
 function openModal() {
    const modal = document.querySelector('.modal');
    modal.classList.add('show');
@@ -7,7 +7,7 @@ function openModal() {
    document.body.style.overflow = 'hidden';
    window.removeEventListener('scroll', showModalByScroll);
    // window.removeEventListener('scroll', clearInterval(modalTimerId));// Удаление вызова 
-   // clearInterval(modalTimerId);
+   clearInterval(modalTimerId);
 }
 function closeModal() {
    const modal = document.querySelector('.modal');
@@ -37,7 +37,6 @@ function modal() {
       closeModal();
       }
    });
-
 
    window.addEventListener('scroll', showModalByScroll);
 
