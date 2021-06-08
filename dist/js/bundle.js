@@ -133,6 +133,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _services_services__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/services */ "./src/js/services/services.js");
+
+
 function cards() {
  // Использование классов для карточек
   
@@ -176,18 +179,7 @@ function cards() {
    }
 }
 
-    // Создаем карточки интерактивно. 
-
-   const getMenuCardContent = async (url) => {
-   const res = await fetch(url); // res - result
-      if(!res.ok){
-         throw new Error(`Could not fetch ${url}, status: ${res.status}`);// Выкинуть в консоль Объект ошибки
-      }
-
-   return await res.json();
-   };
-
-   getMenuCardContent('http://localhost:3000/menu')
+   (0,_services_services__WEBPACK_IMPORTED_MODULE_0__.getMenuCardContent)('http://localhost:3000/menu')
    .then(data => {
       data.forEach(({img, altimg, title, descr, price}) => {
          new MenuCard(img, altimg, title, descr, price, '.menu .container').render(); 
@@ -238,6 +230,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modal */ "./src/js/modules/modal.js");
+/* harmony import */ var _services_services__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/services */ "./src/js/services/services.js");
+
 
 
 function forms(formSelector, modalTimerId) {
@@ -254,18 +248,6 @@ function forms(formSelector, modalTimerId) {
       forms.forEach(item => {
          bindPostData(item);
       });
-
-      const postData = async (url, data) => {
-         const res = await fetch(url, {
-            method: "POST",
-            headers: {
-               'Content-type': 'application/json'
-            },
-            body: data
-         });
-
-         return await res.json();
-      };
 
       function bindPostData(form) {
          form.addEventListener('submit', (e) => {
@@ -292,7 +274,7 @@ function forms(formSelector, modalTimerId) {
                
 
          // Отправка данных собраных в форму выше
-         postData('http://localhost:3000/requests', jsonData)
+         (0,_services_services__WEBPACK_IMPORTED_MODULE_1__.postData)('http://localhost:3000/requests', jsonData)
          .then(data => {
                showThanksModal(message.success);
                statusMessage.remove();
@@ -582,7 +564,7 @@ __webpack_require__.r(__webpack_exports__);
 function timer() {
    // Promotion Timer
   
-   let deadline = new Date('2021-06-26T23:59:59');
+   let deadline = new Date('2021-06-25T23:59:59');
   
    function getTimeRemaining(endtime) {
       const t = Date.parse(endtime) - Date.parse(new Date()),
@@ -662,6 +644,47 @@ function timer() {
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (timer);
+
+/***/ }),
+
+/***/ "./src/js/services/services.js":
+/*!*************************************!*\
+  !*** ./src/js/services/services.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "postData": () => (/* binding */ postData),
+/* harmony export */   "getMenuCardContent": () => (/* binding */ getMenuCardContent)
+/* harmony export */ });
+// Выгружаем данные с заказов на сервер
+const postData = async (url, data) => {
+   const res = await fetch(url, {
+      method: "POST",
+      headers: {
+         'Content-type': 'application/json'
+      },
+      body: data
+   });
+
+   return await res.json();
+};
+
+// Создаем карточки интерактивно. 
+
+const getMenuCardContent = async (url) => {
+const res = await fetch(url); // res - result
+   if(!res.ok){
+      throw new Error(`Could not fetch ${url}, status: ${res.status}`);// Выкинуть в консоль Объект ошибки
+   }
+
+return await res.json();
+};
+
+
+
+
 
 /***/ })
 

@@ -1,7 +1,7 @@
 function timer() {
    // Promotion Timer
   
-   let deadline = new Date('2021-06-26T23:59:59');
+   let deadline = new Date('2021-06-25T23:59:59');
   
    function getTimeRemaining(endtime) {
       const t = Date.parse(endtime) - Date.parse(new Date()),

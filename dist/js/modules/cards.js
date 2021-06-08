@@ -1,3 +1,5 @@
+import {getMenuCardContent} from '../services/services';
+
 function cards() {
  // Использование классов для карточек
   
@@ -40,17 +42,6 @@ function cards() {
       this.parent.append(element);  
    }
 }
-
-    // Создаем карточки интерактивно. 
-
-   const getMenuCardContent = async (url) => {
-   const res = await fetch(url); // res - result
-      if(!res.ok){
-         throw new Error(`Could not fetch ${url}, status: ${res.status}`);// Выкинуть в консоль Объект ошибки
-      }
-
-   return await res.json();
-   };
 
    getMenuCardContent('http://localhost:3000/menu')
    .then(data => {
