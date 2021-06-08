@@ -342,7 +342,7 @@ function openModal(modalSelector, modalTimerId) {
    modal.classList.add('show');
    modal.classList.remove('hide');
    document.body.style.overflow = 'hidden';
-      console.log(modalTimerId);
+      // console.log(modalTimerId);
    if (modalTimerId) {
       // window.removeEventListener('scroll', showModalByScroll);
       clearInterval(modalTimerId);
@@ -408,16 +408,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-function slider() {
+function slider({container, slide, nextArr, prevArr, totalCounter, currentCounter}) {
    
    // <--- SLIDER --->
 
-   const slides = document.querySelectorAll('.offer__slide'),
-         slider = document.querySelector('.offer__slider'),
-         totalCount = document.querySelector('#total'),
-         currentCount = document.querySelector('#current'),
-         prevArrow = document.querySelector('.offer__slider-prev'),
-         nextArrow = document.querySelector('.offer__slider-next'),
+   const slides = document.querySelectorAll(slide),
+         slider = document.querySelector(container),
+         totalCount = document.querySelector(totalCounter),
+         currentCount = document.querySelector(currentCounter),
+         prevArrow = document.querySelector(prevArr),
+         nextArrow = document.querySelector(nextArr),
          dots = document.createElement('ol'),
          dotsArr = [];
 
@@ -506,11 +506,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-function tabs() {
+function tabs(tabsSelector, tabsContentSelector, tabsParentSelector, activeClass) {
    // Tabs
-   const tabs = document.querySelectorAll('.tabheader__item'),
-      tabsContent = document.querySelectorAll('.tabcontent'),
-      tabsParent = document.querySelector('.tabheader__items');
+   const tabs = document.querySelectorAll(tabsSelector),
+      tabsContent = document.querySelectorAll(tabsContentSelector),
+      tabsParent = document.querySelector(tabsParentSelector);
      
    function hideTabContent() {
       tabsContent.forEach(item => { // НАзв аргумента по усмотрению
@@ -520,14 +520,14 @@ function tabs() {
         });
   
       tabs.forEach(item => {
-      item.classList.remove('tabheader__item_active');
+      item.classList.remove(activeClass);
        });
     }
   
    function showTabContent(i = 0) {
       tabsContent[i].classList.add('show', 'fade');
       tabsContent[i].classList.remove('hide');
-      tabs[i].classList.add('tabheader__item_active');
+      tabs[i].classList.add(activeClass);
    }
   
    hideTabContent();
@@ -536,7 +536,7 @@ function tabs() {
    tabsParent.addEventListener('click', (event) => {
       const target = event.target;
   
-        if (target && target.classList.contains('tabheader__item')) {
+        if (target && target.classList.contains(tabsSelector.slice(1))) {
            tabs.forEach((item, i) => {
               if (target == item) {
                  hideTabContent();
@@ -561,10 +561,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-function timer() {
+function timer(id, deadline) {
    // Promotion Timer
   
-   let deadline = new Date('2021-06-25T23:59:59');
+   // let deadline = new Date('2021-06-25T23:59:59');
   
    function getTimeRemaining(endtime) {
       const t = Date.parse(endtime) - Date.parse(new Date()),
@@ -617,7 +617,7 @@ function timer() {
       }
    }
 
-   setClock('.timer', deadline);
+   setClock(id, deadline);
 
    
    const promotionDescr = document.querySelector('.promotion__descr'),
@@ -769,13 +769,20 @@ __webpack_require__.r(__webpack_exports__);
 
 window.addEventListener('DOMContentLoaded', () => {
       const modalTimerId = setTimeout(() => (0,_modules_modal__WEBPACK_IMPORTED_MODULE_2__.openModal)('.modal', modalTimerId), 5000);
-   (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_0__.default)();
+   (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_0__.default)('.tabheader__item', '.tabcontent', '.tabheader__items', 'tabheader__item_active');
    (0,_modules_cards__WEBPACK_IMPORTED_MODULE_1__.default)();
    (0,_modules_modal__WEBPACK_IMPORTED_MODULE_2__.default)('[data-modal]', '.modal', modalTimerId);
-   (0,_modules_slider__WEBPACK_IMPORTED_MODULE_3__.default)();
+   (0,_modules_slider__WEBPACK_IMPORTED_MODULE_3__.default)({
+      container: '.offer__slider',
+      slide: '.offer__slide',
+      nextArr: '.offer__slider-next',
+      prevArr: '.offer__slider-prev',
+      totalCounter: '#total',
+      currentCounter: '#current'
+   });
    (0,_modules_forms__WEBPACK_IMPORTED_MODULE_4__.default)('form', modalTimerId);
    (0,_modules_calc__WEBPACK_IMPORTED_MODULE_5__.default)();
-   (0,_modules_timer__WEBPACK_IMPORTED_MODULE_6__.default)();         
+   (0,_modules_timer__WEBPACK_IMPORTED_MODULE_6__.default)('.timer', '2021-06-25T23:59:59');         
 });
 
 })();

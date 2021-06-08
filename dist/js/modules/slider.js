@@ -1,13 +1,13 @@
-function slider() {
+function slider({container, slide, nextArr, prevArr, totalCounter, currentCounter}) {
    
    // <--- SLIDER --->
 
-   const slides = document.querySelectorAll('.offer__slide'),
-         slider = document.querySelector('.offer__slider'),
-         totalCount = document.querySelector('#total'),
-         currentCount = document.querySelector('#current'),
-         prevArrow = document.querySelector('.offer__slider-prev'),
-         nextArrow = document.querySelector('.offer__slider-next'),
+   const slides = document.querySelectorAll(slide),
+         slider = document.querySelector(container),
+         totalCount = document.querySelector(totalCounter),
+         currentCount = document.querySelector(currentCounter),
+         prevArrow = document.querySelector(prevArr),
+         nextArrow = document.querySelector(nextArr),
          dots = document.createElement('ol'),
          dotsArr = [];
 
