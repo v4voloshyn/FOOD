@@ -1,6 +1,6 @@
 # FOOD 
 ### Сервис доставки питания.
-
+[Preview Link](https://v4voloshyn.github.io/FOOD/)
 #### Использованы языки, инструменты и технологии:
 * HTML5/CSS3;
 * SCSS Prepros;
